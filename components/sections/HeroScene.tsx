@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useInView, useReducedMotion, useTransform, type MotionValue } from "framer-motion";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 // Background video of the hero, with gradients only where the text is.
 
 const HERO_VIDEO = "/videos/hero-detailing.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-detailing-mobile.mp4";
 const HERO_POSTER = "/images/hero/hero-poster.jpg";
+const HERO_POSTER_MOBILE = "/images/hero/hero-poster-mobile.jpg"; // same crop as the mobile video
 
 const VIDEO_FADE_IN = 1.4;
 const MOUSE_DEPTH = 12;
@@ -24,6 +26,7 @@ export function HeroScene({ mouseX, mouseY, progress }: HeroSceneProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoInView = useInView(videoRef);
   const reduceMotion = useReducedMotion();
+  const isTabletUp = useMediaQuery("(min-width: 768px)");
 
   // no autoPlay attribute: this way reduced motion and data saver are respected
   useEffect(() => {
@@ -65,8 +68,8 @@ export function HeroScene({ mouseX, mouseY, progress }: HeroSceneProps) {
           loop
           playsInline
           preload="auto"
-          poster={HERO_POSTER}
-          className="grade-video absolute inset-0 size-full object-cover object-[74%_50%] md:object-[66%_50%] lg:object-[60%_50%]"
+          poster={isTabletUp ? HERO_POSTER : HERO_POSTER_MOBILE}
+          className="grade-video absolute inset-0 size-full object-cover object-[39%_50%] md:object-[66%_50%] lg:object-[60%_50%]"
         >
           <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
           <source src={HERO_VIDEO} type="video/mp4" />
