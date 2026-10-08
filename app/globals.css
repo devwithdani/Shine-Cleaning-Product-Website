@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* colours: blue only as an accent, the rest black / grey / off-white */
+:root {
+  --background: #080a0c;
+  --background-2: #11171b;
+  --surface: #1c252b;
+  --foreground: #f1f3f4;
+  --muted: #9aa6ad;
+  --accent: #149dd1;
+  --line: rgb(241 243 244 / 0.1);
+  --line-strong: rgb(241 243 244 / 0.22);
+
+  --nav-height: 76px;
+}
+
+@theme inline {
+  --radius-card: 2px;
+  --radius-tile: 2px;
+
+  --color-background: var(--background);
+  --color-background-2: var(--background-2);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  /* font sizes, scale with the screen width (svh also keeps the hero small enough on low laptops) */
+  --text-display: clamp(2.5rem, min(1.55rem + 4.1vw, 9.4svh), 5.25rem);
+  --text-display--line-height: 0.96;
+  --text-h1: clamp(2.25rem, 1.5rem + 3.1vw, 4.25rem);
+  --text-h1--line-height: 1;
+  --text-h2: clamp(2rem, 1.45rem + 2.3vw, 3.5rem);
+  --text-h2--line-height: 1.02;
+  --text-h3: clamp(1.6rem, 1.3rem + 1.25vw, 2.6rem);
+  --text-h3--line-height: 1.05;
+  --text-h4: clamp(1.35rem, 1.2rem + 0.65vw, 1.85rem);
+  --text-h4--line-height: 1.12;
+  --text-lead: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-lead--line-height: 1.65;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height); /* anchors end up below the navbar */
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 4rem;
+  }
+}
+
+@utility font-heading {
+  font-family: var(--font-display);
+  font-stretch: 110%;
+  font-weight: 600;
+  letter-spacing: -0.032em;
+}
+
+@utility font-heading-light {
+  font-family: var(--font-display);
+  font-stretch: 110%;
+  font-weight: 250;
+  letter-spacing: -0.028em;
+}
+
+@utility text-eyebrow {
+  font-family: var(--font-display);
+  font-stretch: 110%;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* labels on top of photos */
+@utility glass {
+  background-color: rgb(8 10 12 / 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(241 243 244 / 0.12);
+}
+
+@utility panel {
+  background-color: var(--background-2);
+  border: 1px solid var(--line);
+}
+
+/* same colour grading for all photos */
+@utility grade {
+  filter: contrast(1.06) saturate(0.88) brightness(0.97);
+}
+
+/* a bit less saturation so the blue foam doesn't fight with the headline */
+@utility grade-video {
+  filter: contrast(1.1) saturate(0.78) brightness(0.96);
+}
